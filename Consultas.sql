@@ -59,13 +59,44 @@ select NomeArtistico, count(IndicacaoOscar) from ator
 group by NomeArtistico; 
 
 #m) Obter o nome dos autores que não atuam em nenhum filme.
+
+select a.NomeArtistico from ator a where a.CodAtor not in (select p.CodAtor from personagem p);
+
 #n) Obter o código e o nome dos filmes em que Jim Carrey não atua.
+
+select f.CodFilme, F.NomeFilme from filme f where f.CodFilme not in(select f.CodFilme from filme f, ator a, 
+personagem p
+where p.CodAtor=a.CodAtor and 
+p.CodFilme=f.CodFilme AND a.NomeArtistico="Jim Carrey") order by f.NomeFilme;
+
 #o) Obter o nome artístico dos atores, bem como a média de ganho com cachês nos filmes que atuaram.
+
+select distinct a.NomeArtistico, sum(p.Salario)/count(p.Salario) from ator a, personagem p
+where p.CodAtor=a.CodAtor group by a.NomeArtistico;
+
 #p) Obter os dados dos atores que receberam algum Oscar.
+
+select a.* from ator a where Oscar is not null;
+
 #q) Obter o nome dos atores e suas respectivas idades, que têm idade maior do que a idade média de todos os atores do sexo masculino.
-#r) Obter o ano do Primeiro filme onde Jim Carrey atuou, e o ano de seu último filme.
+
+select NomeArtistico, Idade from ator where sexo="M" and Idade>(select sum(Idade)/count(Idade) from ator);
+
+#r) Obter o  ano do Primeiro filme onde Jim Carrey atuou, e o ano de seu último filme.
+
+select min(f.AnoFilme) as "Primeiro Filme", max(f.AnoFilme) as "Último Filme" from filme f, ator a, personagem p 
+where p.CodAtor=a.CodAtor and p.CodFilme=f.CodFilme AND a.NomeArtistico="Jim Carrey" ;
+
 #s) Obter o número de filmes em que atuou George Clooney.
+
+select count(f.CodFilme) from filme f, ator a, 
+personagem p
+where p.CodAtor=a.CodAtor and 
+p.CodFilme=f.CodFilme AND a.NomeArtistico="George Clooney";
+
 #t) Obter o nome e o código dos filmes em que Tom Hanks e Matt Damon atuam juntos.
+
+
 #u) Obter o nome dos filmes que Tom Hanks atua, mas Matt Damon não atua.
 #v) Obter o nome dos atores que atuam em algum filme que Jim Carrey atua.
 #w) Obter o nome dos atores que atuam em algum filme que Jim Carrey não atua.
