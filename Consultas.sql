@@ -95,8 +95,35 @@ where p.CodAtor=a.CodAtor and
 p.CodFilme=f.CodFilme AND a.NomeArtistico="George Clooney";
 
 #t) Obter o nome e o código dos filmes em que Tom Hanks e Matt Damon atuam juntos.
-
-
 #u) Obter o nome dos filmes que Tom Hanks atua, mas Matt Damon não atua.
 #v) Obter o nome dos atores que atuam em algum filme que Jim Carrey atua.
 #w) Obter o nome dos atores que atuam em algum filme que Jim Carrey não atua.
+
+#4. Utilizando as consultas UPDATE e DELETE, faça as seguintes consultas e grave-as em um arquivo SQL para ser enviado.
+#a) Atualize os valores dos cachês de todos os atores para 100.000.
+
+use cinema;
+update personagem set salario=100000 where salario>0;
+
+#b) Atualize a tabela ATOR alterando a sigla USA referente à nacionalidade dos atores para “EUA”.
+
+update ator set Nacionalidade="EUA" where Nacionalidade="USA";
+
+#c) Altere o ano de lançamento do filme “A Máscara do Zorro” para 2001.
+
+update filme set AnoFilme=2001 where NomeFilme like "A Máscara do Zorro";
+
+#d) Acrescente mais 10 anos à idade de todos os atores que são do sexo “Masculino”.
+
+update ator set idade=idade+10 where Sexo="M";
+select idade from ator;
+
+#e) Exclua o ator de código ‘a22’.
+
+delete from ator where CodAtor='a22';
+
+#f) Tente remover o ator de código a1 e verifique a mensagem informado pelo MySQL.
+
+DELETE FROM ATOR WHERE CodAtor='a1';
+
+#Não é possível excluir pq possui chave estrangeira ativa
