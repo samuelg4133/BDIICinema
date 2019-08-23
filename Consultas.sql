@@ -95,9 +95,32 @@ where p.CodAtor=a.CodAtor and
 p.CodFilme=f.CodFilme AND a.NomeArtistico="George Clooney";
 
 #t) Obter o nome e o código dos filmes em que Tom Hanks e Matt Damon atuam juntos.
+
+select f.NomeFilme, f.CodFilme from filme f, ator a, personagem p
+where p.CodAtor=a.CodAtor and p.CodFilme=f.CodFilme AND a.NomeArtistico="Tom Hanks " and f.CodFilme in (select f.CodFilme from filme f, ator a, personagem p
+where p.CodAtor=a.CodAtor and p.CodFilme=f.CodFilme AND a.NomeArtistico="Matt Damon"); 
+
 #u) Obter o nome dos filmes que Tom Hanks atua, mas Matt Damon não atua.
+
+select f.NomeFilme, f.CodFilme from filme f, ator a, personagem p
+where p.CodAtor=a.CodAtor and p.CodFilme=f.CodFilme AND a.NomeArtistico="Tom Hanks " and f.CodFilme not in (select f.CodFilme from filme f, ator a, personagem p
+where p.CodAtor=a.CodAtor and p.CodFilme=f.CodFilme AND a.NomeArtistico="Matt Damon"); 
+
 #v) Obter o nome dos atores que atuam em algum filme que Jim Carrey atua.
+
+select distinct a.NomeArtistico
+from Ator a, Filme f, Personagem p
+where a.CodAtor = p.CodAtor and f.CodFilme = p.CodFilme and a.NomeArtistico <> 'Jim Carrey' and f.CodFilme in (select f.CodFilme
+from Ator a, Filme f, Personagem p
+where a.CodAtor = p.CodAtor and f.CodFilme = p.CodFilme and a.NomeArtistico = 'Jim Carrey') order by a.NomeArtistico;
+
 #w) Obter o nome dos atores que atuam em algum filme que Jim Carrey não atua.
+
+select distinct a.NomeArtistico
+from Ator a, Filme f, Personagem p
+where a.CodAtor = p.CodAtor and f.CodFilme = p.CodFilme and a.NomeArtistico <> 'Jim Carrey' and f.CodFilme in (select f.CodFilme
+from Ator a, Filme f, Personagem p
+where a.CodAtor = p.CodAtor and f.CodFilme = p.CodFilme and a.NomeArtistico <> 'Jim Carrey') order by a.NomeArtistico;
 
 #4. Utilizando as consultas UPDATE e DELETE, faça as seguintes consultas e grave-as em um arquivo SQL para ser enviado.
 #a) Atualize os valores dos cachês de todos os atores para 100.000.
